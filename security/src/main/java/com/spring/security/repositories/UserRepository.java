@@ -1,6 +1,6 @@
-package com.practice.security.repositories;
+package com.spring.security.repositories;
 
-import com.practice.security.entities.User;
+import com.spring.security.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,7 +2,7 @@ spring:
   application:
     name: security
   datasource:
-    url: jdbc:mysql://localhost:3306/security_db
+    url: jdbc:mysql://localhost:3306/spring_security_practice
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,3 +13,14 @@ spring:
     properties:
       hibernate:
         format-sql: true
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    timeout: 1m
+logging:
+  level:
+    org.springframework.session: DEBUG
+    org.springframework.jdbc.datasource.init: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG

@@ -1,7 +1,7 @@
-package com.practice.security.controllers;
+package com.spring.security.controllers;
 
-import com.practice.security.entities.User;
-import com.practice.security.services.UserService;
+import com.spring.security.entities.User;
+import com.spring.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

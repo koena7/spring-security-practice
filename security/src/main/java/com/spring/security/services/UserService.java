@@ -1,7 +1,7 @@
-package com.practice.security.services;
+package com.spring.security.services;
 
-import com.practice.security.entities.User;
-import com.practice.security.repositories.UserRepository;
+import com.spring.security.entities.User;
+import com.spring.security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
