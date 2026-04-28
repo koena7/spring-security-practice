@@ -26,7 +26,6 @@ public class SecurityConfig {
                         .requestMatchers("/test").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable())
                 .formLogin(Customizer.withDefaults());
         return http.build();
     }
