@@ -23,6 +23,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ROLE_"+user.getRole());
         userService.saveUser(user);
         return ResponseEntity.ok("User registered successfully");
     }
