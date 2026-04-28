@@ -13,11 +13,6 @@ spring:
     properties:
       hibernate:
         format-sql: true
-  session:
-    store-type: jdbc
-    jdbc:
-      initialize-schema: always
-    timeout: 1m
 logging:
   level:
     org:

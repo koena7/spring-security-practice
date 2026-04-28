@@ -7,10 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 @Configuration
-@EnableJdbcHttpSession
 public class SecurityConfig {
 
     @Bean
@@ -27,7 +25,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())
-                .formLogin(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }
