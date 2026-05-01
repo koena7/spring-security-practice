@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private AuthenticationManager authenticationManager;
@@ -29,6 +31,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        log.info("INSIDE JWT AUTHENTICATION FILTER");
         if(!request.getServletPath().equals("/generate-token")){
             filterChain.doFilter(request, response);
             return;
@@ -41,6 +44,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         Authentication authResult = authenticationManager.authenticate(authToken);
 
+        if(authResult.isAuthenticated()){
+            String jwtToken = jwtUtil.generateToken(loginRequest.getUsername(), 5);
+            response.setHeader("Authorization", "Token: "+jwtToken);
+        }
     }
 
 }
