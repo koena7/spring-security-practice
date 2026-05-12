@@ -1,8 +1,10 @@
 package com.spring.security.authentication;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -21,5 +23,18 @@ public class JWTUtil {
                 .setExpiration(new Date(System.currentTimeMillis()+exprityMinutes*60*1000))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String validateAndExtractUsername(String token) throws AuthenticationException{
+        try{
+            return Jwts.parser()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch(JwtException exception){
+            return null;
+        }
     }
 }
