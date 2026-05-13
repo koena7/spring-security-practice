@@ -3,6 +3,7 @@ package com.spring.security.authentication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         if(authResult.isAuthenticated()){
             String jwtToken = jwtUtil.generateToken(loginRequest.getUsername(), 5);
-            response.setHeader("Authorization", "Token: "+jwtToken);
+            response.setHeader("Authorization", "Bearer "+jwtToken);
+
+            String refreshToken = jwtUtil.generateToken(loginRequest.getUsername(), 7*24*60);
+            Cookie refreshCookie = new Cookie("RefreshToken", refreshToken);
+            refreshCookie.setHttpOnly(true);
+            refreshCookie.setSecure(true);
+            refreshCookie.setPath("/refresh-token");
+            refreshCookie.setMaxAge(7*24*60*60);
+
+            response.addCookie(refreshCookie);
         }
     }
 
