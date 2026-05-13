@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -29,7 +30,11 @@ public class JWTValidationFilter extends OncePerRequestFilter {
         if(token != null){
             JwtAuthenticationToken authToken = new JwtAuthenticationToken(token);
             Authentication authResult = authenticationManager.authenticate(authToken);
+            if(authResult.isAuthenticated()){
+                SecurityContextHolder.getContext().setAuthentication(authResult);
+            }
         }
+        filterChain.doFilter(request, response);
     }
 
     private String extractTokenFromRequest(HttpServletRequest request){
